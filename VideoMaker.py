@@ -11,13 +11,12 @@ class VideoMaker:
         self.fps = fps
         self.frame_size = None
         self.output_video_temp = os.path.join('symphony_of_ether', 'temp_files', 'temp_video', 'temp.mp4')
-        self.output_video_final = os.path.join('symphony_of_ether', 'temp_files', 'temp_video', 'final_output.mp4')
 
-    def gen_video(self):
-        img_count = len(os.listdir(self.images_path))
+    def gen_video(self, visualization_type='combined'):
+        img_count = len(os.listdir(os.path.join(self.images_path, visualization_type)))
         img_paths = []
         for i in range(img_count):
-            img_path = os.path.join(self.images_path, str(i) + '.png')
+            img_path = os.path.join(self.images_path, visualization_type, str(i) + '.png')
             img_paths.append(img_path)
 
         height, width, _ = cv.imread(img_paths[0]).shape
@@ -34,7 +33,8 @@ class VideoMaker:
         if self.audio_path != None:
             audio_clip = AudioFileClip(self.audio_path)
             final_clip = video_clip.set_audio(audio_clip)
-            final_clip.write_videofile(self.output_video_final, codec='libx264', audio_codec='aac')
+            final_clip.write_videofile(os.path.join('symphony_of_ether', 'temp_files', 'temp_video', 'output-' + visualization_type +'.mp4')
+                ,codec='libx264', audio_codec='aac')
 
 # temp = VideoMaker(fps=10, audio_path='symphony_of_ether/temp_files/temp_video/untitled.wav')
-# temp.gen_video()
+# temp.gen_video(visualization_type='combined')

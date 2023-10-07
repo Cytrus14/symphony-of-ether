@@ -2,5 +2,6 @@ __pycache__/
 images_temp_631/
 
 symphony_of_ether/temp_files/temp_video/*.mp4
-symphony_of_ether/temp_files/temp_images/*.png
+symphony_of_ether/temp_files/temp_images/combined/*.png
+symphony_of_ether/temp_files/temp_images/grid/*.png
 main.py
