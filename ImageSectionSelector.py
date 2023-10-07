@@ -132,9 +132,9 @@ class ImageSelectionSelector:
         self.frameId += 1
         return imageSectionsList
 
-temp = ImageSelectionSelector('m108', 4, 10, 10)
-sections = temp.get_sections()
-while len(sections) != 0:
-    sections = temp.get_sections()
+# temp = ImageSelectionSelector('m108', 4, 10, 10)
+# sections = temp.get_sections()
+# while len(sections) != 0:
+#     sections = temp.get_sections()
 
 
