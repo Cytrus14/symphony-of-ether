@@ -33,35 +33,5 @@
 
   </div>
 </div>
-<script>
-    const pixelImage = document.getElementById('pixelImage');
-    const xCoordSpan = document.getElementById('xCoord');
-    const yCoordSpan = document.getElementById('yCoord');
 
-    pixelImage.addEventListener('click', function(event) {
-        const rect = pixelImage.getBoundingClientRect();
-        const x = Math.floor(event.clientX - rect.left);
-        const y = Math.floor(event.clientY - rect.top);
-        xCoordSpan.textContent = x;
-        yCoordSpan.textContent = y;
-        fetch('/send-coordinates', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ x: x, y: y }) // Przesłanie danych w formacie JSON
-        })
-        .then(response => {
-            if (response.ok) {
-                // Sukces - dane zostały przesłane na serwer
-                console.log('Dane przesłane na serwer.');
-            } else {
-                console.error('Wystąpił błąd podczas przesyłania danych.');
-            }
-        })
-        .catch(error => {
-            console.error('Błąd przesyłania danych:', error);
-        });
-    });
-</script>
 {% endblock %}
