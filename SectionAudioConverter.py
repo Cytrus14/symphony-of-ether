@@ -53,7 +53,7 @@ class SectionAudioConverter:
         self.mid.save(soundFilePath)
 
     def fun(self, x, a):
-        return a * np.sin(x)
+        return np.log(a * np.sin(x))
 
     def SynthConvert(self):
 
