@@ -13,7 +13,7 @@ class ImageSelectionSelector:
         self.circle_center_y = start_y
         self.channel_count = channel_count
         self.frameId = 0
-        self.scale_down_factor = 2
+        self.scale_down_factor = 8
         self.band_images = []
         self.visualization_image = cv.imread(os.path.join('symphony_of_ether', 'static', 
                 'astronomical_objects', object_name, 'visualization.png'))

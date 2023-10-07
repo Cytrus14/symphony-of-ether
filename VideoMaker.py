@@ -13,6 +13,7 @@ class VideoMaker:
         self.output_video_temp = os.path.join('symphony_of_ether', 'temp_files', 'temp_video', 'temp.mp4')
 
     def gen_video(self, visualization_type='combined'):
+        print(os.listdir(os.path.join(self.images_path, visualization_type)))
         img_count = len(os.listdir(os.path.join(self.images_path, visualization_type)))
         img_paths = []
         for i in range(img_count):
