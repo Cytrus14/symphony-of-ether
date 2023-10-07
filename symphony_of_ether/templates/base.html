@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
     <title>{% block title %}Symphony of ether app{% endblock %}</title>
 </head>
-<body>
-    <nav>
-        <ul>
+<body style="background-color: #D8D8D8; display: flex; justify-content: center">
+    <main class="mt-5">
+        <div class="container" style="min-width: 1400px">
+            {% block content %}{% endblock %}
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
-        </ul>
-    </nav>
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
+            <li><a href="/video">Video</a></li>
+            </ul>
+        </div>
+    </main>
 </body>
 </html>
