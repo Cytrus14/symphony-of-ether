@@ -12,8 +12,11 @@ class ImageSelectionSelector:
         self.circle_center_x = start_x
         self.circle_center_y = start_y
         self.channel_count = channel_count
-        self.scale_down_factor = 3
+        self.frameId = 0
+        self.scale_down_factor = 2
         self.band_images = []
+        self.visualization_image = cv.imread(os.path.join('symphony_of_ether', 'static', 
+                'astronomical_objects', object_name, 'visualization.png'))
 
         for i in range(1, channel_count+1):
             band_image_name = ('band' + str(i) + '.png')
@@ -22,12 +25,25 @@ class ImageSelectionSelector:
             band_image = cv.imread(band_image_path)
             band_image = cv.cvtColor(band_image, cv.COLOR_BGR2GRAY)
             self.band_images.append(band_image)
+        
+        # Clear previous images if any
+        temp_images_directory = os.path.join('symphony_of_ether', 'temp_files', 
+             'temp_images')
+        files = os.listdir(temp_images_directory)
+        for file in files:
+            file_path = os.path.join(temp_images_directory, file)
+            try:
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            except Exception as e:
+                print(f'Error deleting {file_path}', {e})
 
 
 # img = cv.imread('images_temp_631/m31/test.png')
 # img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     def get_sections(self):
         imageSectionsList = []
+        visualization_image_copy = self.visualization_image.copy()
         for idx, img in enumerate(self.band_images):
             img_size_y, img_size_x = img.shape
             circle_radius = self.circle_radius
@@ -38,7 +54,6 @@ class ImageSelectionSelector:
             img_size_y_binned = int(img_size_y/self.scale_down_factor)
             img_size_x_binned = int(img_size_x/self.scale_down_factor)
             img = cv.resize(img, (img_size_y_binned, img_size_x_binned), interpolation=cv.INTER_NEAREST)
-            img_copy = img.copy()
 
             # Create a meshgrid of coordinates
             xv, yv = np.meshgrid(np.arange(img_size_x_binned) - circle_center_x, np.arange(img_size_y_binned) - circle_center_y)
@@ -66,17 +81,26 @@ class ImageSelectionSelector:
                     intensity = img[row][col]
                     imageSection = ImageSection(x_pos=abs(row - self.circle_center_x), y_pos=abs(col - self.circle_center_y), z_pos=channel, intensity=intensity)
                     imageSectionsList.append(imageSection)
-                    img_copy[row][col] = 255
+
+                    neighborhood_size = int(self.scale_down_factor / 2)
+                    x_start = max(0, row*self.scale_down_factor - neighborhood_size)
+                    x_end = min(img_size_x, row*self.scale_down_factor + neighborhood_size + 1)
+                    y_start = max(0, col*self.scale_down_factor - neighborhood_size)
+                    y_end = min(img_size_y, col*self.scale_down_factor + neighborhood_size + 1)
+                    print(x_start, ' ',x_end)
+                    visualization_image_copy[y_start:y_end, x_start:x_end] = (255,255,255)
 
             img = cv.resize(img, (img_size_y, img_size_x), interpolation=cv.INTER_NEAREST)
-            img_copy = cv.resize(img_copy, (img_size_y, img_size_x), interpolation=cv.INTER_NEAREST)
-            # cv.imshow('abc', img_copy)
-            # cv.waitKey(30)
+            #img_copy = cv.resize(img_copy, (img_size_y, img_size_x), interpolation=cv.INTER_NEAREST)
+            cv.imwrite(os.path.join('symphony_of_ether', 'temp_files', 
+             'temp_images', str(self.frameId) + '.png'), visualization_image_copy)
         self.circle_radius += 1
+        self.frameId += 1
         return imageSectionsList
 
-# temp = ImageSelectionSelector('m31', 4, 10, 10)
-# while True:
-#     sections = temp.get_sections()
+temp = ImageSelectionSelector('m31', 4, 10, 10)
+sections = temp.get_sections()
+while len(sections) != 0:
+    sections = temp.get_sections()
 
 
