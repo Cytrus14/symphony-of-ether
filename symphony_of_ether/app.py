@@ -12,9 +12,52 @@ def index():
 def andromeda():
     return render_template('andromeda.html')
 
-@app.route('/body')
-def body():
-    return render_template('pomocniczy.html')
+@app.route('/bode')
+def bode():
+    return render_template('bode.html')
+
+@app.route('/surfboard')
+def surfboard():
+    return render_template('surfboard.html')
+
+@app.route('/angelfish')
+def angelfish():
+    return render_template('angelfish.html')
+
+@app.route('/Casper_the_Friendly_Ghost_Nebular')
+def Casper_the_Friendly_Ghost_Nebular():
+    return render_template('Casper_the_Friendly_Ghost_Nebular.html')
+
+@app.route('/Crab_Nebula')
+def Crab_Nebula():
+    return render_template('Crab_Nebula.html')
+
+@app.route('/Owl_Nebula')
+def Owl_Nebula():
+    return render_template('Owl_Nebula.html')
+
+
+@app.route('/Spider_Globular')
+def Spider_Globular():
+    return render_template('Spider_Globular.html')
+
+@app.route('/sombrero')
+def sombrero():
+    return render_template('sombrero.html')
+
+@app.route('/Phantom')
+def Phantom():
+    return render_template('Phantom.html')
+
+
+@app.route('/NGC_5272')
+def NGC_5272():
+    return render_template('NGC_5272.html')
+
+
+@app.route('/Dumbbell_Nebula')
+def Dumbbell_Nebula():
+    return render_template('Dumbbell_Nebula.html')
 
 @app.route('/send-coordinates', methods=['POST'])
 def receive_coordinates():
