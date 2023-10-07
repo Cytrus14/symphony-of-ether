@@ -36,9 +36,11 @@
                     <h5 class="card-title">Selected Pixel Coordinates:</h5>
                     <p class="card-text">
                         X: <span id="xCoord">0</span><br>
-                        Y: <span id="yCoord">0</span>
+                        Y: <span id="yCoord">0</span><br>
+                        <span id="imageWidth"></span><br>
+                        <span id="imageHeight"></span><br>
                     </p>
-                    <a href="/" class="btn btn-primary">Return to main page</a>
+                    <button id="resetButton" class="btn btn-secondary">Reset</button>
                 </div>
             </div>
         </div>
@@ -48,6 +50,26 @@
     const pixelImage = document.getElementById('pixelImage');
     const xCoordSpan = document.getElementById('xCoord');
     const yCoordSpan = document.getElementById('yCoord');
+    const imageWidthSpan = document.getElementById('imageWidth');
+    const imageHeightSpan = document.getElementById('imageHeight');
+
+    // Pobieranie wymiarów obrazu
+    const image = new Image();
+    image.src = "../static/astronomical_objects/m31/visualization.png";
+    image.onload = function() {
+        // Pobierz szerokość i wysokość obrazu
+        const width = this.naturalWidth;
+        const height = this.naturalHeight;
+
+        // Ustaw szerokość i wysokość w odpowiednich elementach HTML
+        //imageWidthSpan.textContent = width/2;
+        //imageHeightSpan.textContent = height/2;
+
+        // Ustaw wartość domyślną dla x
+        xCoordSpan.textContent = width/2;
+        yCoordSpan.textContent = height/2;
+    };
+
 
     pixelImage.addEventListener('click', function(event) {
         const rect = pixelImage.getBoundingClientRect();
@@ -74,8 +96,12 @@
             console.error('Błąd przesyłania danych:', error);
         });
     });
+        resetButton.addEventListener('click', function() {
+        const width = image.naturalWidth;
+        const height = image.naturalHeight
+        xCoordSpan.textContent = width/2;
+        yCoordSpan.textContent = height/2;
+    });
 </script>
 </body>
 </html>
-
-
