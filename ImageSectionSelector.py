@@ -12,7 +12,7 @@ class ImageSelectionSelector:
         self.circle_center_x = start_x
         self.circle_center_y = start_y
         self.channel_count = channel_count
-        self.scale_down_factor = 3
+        self.scale_down_factor = 8
         self.band_images = []
 
         for i in range(1, channel_count+1):
