@@ -5,7 +5,6 @@
 {% block content %}
 
 <div>
-
 <a href="/" class="round-button">&larr;</a>
   <div class="card" style="min-height: 600px; ">
       <div class="container" style="padding: 2rem">
@@ -15,14 +14,16 @@
                     <h5 class="card-title">Selected Pixel Coordinates:</h5>
                     <p class="card-text">
                         X: <span id="xCoord">0</span><br>
-                        Y: <span id="yCoord">0</span>
+                        Y: <span id="yCoord">0</span><br>
+                        <span id="imageWidth"></span><br>
+                        <span id="imageHeight"></span><br>
                     </p>
                 </div>
 
   <div class="container" style="display: flex; justify-content: space-evenly;">
     <div class="row" style="margin-top: 2rem;">
         <div class="col-md-6">
-            <button class="btn btn-primary" style="width: 100px;">RESET</button>
+            <button class="btn btn-primary" style="width: 100px;" id="resetButton">RESET</button>
         </div>
         <div class="col-md-6">
             <button class="btn btn-primary" style="width: 100px;">GENERATE</button>
@@ -33,5 +34,7 @@
 
   </div>
 </div>
+
+
 
 {% endblock %}
