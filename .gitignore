@@ -3,10 +3,9 @@ images_temp_631/
 
 .idea/
 
-
-symphony_of_ether/temp_files/temp_video/*.mp4
-symphony_of_ether/temp_files/temp_images/*.png
-
 main.py
 symphony_of_ether/static/astronomical_objects/m31/band1.png
 symphony_of_ether/static/astronomical_objects/m31/band2.png
+symphony_of_ether/temp_files/temp_images/combined/*.png
+symphony_of_ether/temp_files/temp_images/grid/*.png
+main.py
