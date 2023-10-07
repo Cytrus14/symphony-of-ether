@@ -7,9 +7,13 @@ app = Flask(__name__, template_folder='templates')
 def index():
     return render_template('index.html')
 
-@app.route('/about')
+@app.route('/andromeda')
 def about():
-    return render_template('base.html')
+    return render_template('pomocniczy.html')
+
+@app.route('/body')
+def body():
+    return render_template('pomocniczy.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
