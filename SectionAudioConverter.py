@@ -2,6 +2,7 @@ import math
 import numpy as np
 import mido
 from ImageSectionSelector import ImageSelectionSelector
+from VideoMaker import VideoMaker as VM, VideoMaker
 from pydub import AudioSegment
 
 soundFilePath = "Sounds/ImageMusic.wav"
@@ -28,6 +29,7 @@ class SectionAudioConverter:
         self.trackSynth = AudioSegment.empty()
 
         self.chanelCount = chanelCount + 1
+        self.VM = VideoMaker(1/self.duration)
 
     def InstrumentalConvert(self):
         secList = self.IS.get_sections()
@@ -89,5 +91,12 @@ class SectionAudioConverter:
 
         finalTrack.export(soundFilePath, format="wav")
 
+
+
+
 SAC = SectionAudioConverter(4)
 SAC.SynthConvert()
+VM = VideoMaker(fps=10)
+VM.audio_path = "Sounds/ImageMusic.wav"
+VM.gen_video("combined")
+VM.gen_video("grid")
