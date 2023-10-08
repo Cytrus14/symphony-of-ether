@@ -4,13 +4,13 @@ import numpy as np
 from moviepy.editor import VideoFileClip, AudioFileClip
 
 class VideoMaker:
-    def __init__(self, images_path=os.path.join('symphony_of_ether', 'temp_files', 'temp_images'),
-            audio_path=None, fps=10):
+    def __init__(self, images_path=os.path.join('temp_files', 'temp_images'),
+                 audio_path=None, fps=10):
         self.audio_path = audio_path
         self.images_path = images_path
         self.fps = fps
         self.frame_size = None
-        self.output_video_temp = os.path.join('symphony_of_ether', 'temp_files', 'temp_video', 'temp.mp4')
+        self.output_video_temp = os.path.join('temp_files', 'temp_video', 'temp.mp4')
 
     def gen_video(self, visualization_type='combined'):
         img_count = len(os.listdir(os.path.join(self.images_path, visualization_type)))
@@ -33,7 +33,7 @@ class VideoMaker:
         if self.audio_path != None:
             audio_clip = AudioFileClip(self.audio_path)
             final_clip = video_clip.set_audio(audio_clip)
-            final_clip.write_videofile(os.path.join('symphony_of_ether', 'static', 'temp_video', 'output_' + visualization_type +'.mp4')
+            final_clip.write_videofile(os.path.join('static', 'temp_video', 'output_' + visualization_type + '.mp4')
                 ,codec='libx264', audio_codec='aac')
 
 # temp = VideoMaker(fps=10, audio_path='symphony_of_ether/temp_files/temp_video/untitled.wav')

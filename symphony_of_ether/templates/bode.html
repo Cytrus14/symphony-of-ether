@@ -24,23 +24,30 @@
 
   <div class="container" style="display: flex; justify-content: space-evenly; margin-bottom: 20px">
     <div class="row" style="margin-top: 0;">
-        <div class="col-md-6">
-            <button class="btn btn-primary" style="width: 100px;" id="resetButton">RESET</button>
-        </div>
-        <div class="col-md-6">
-            <button class="btn btn-primary" style="width: 100px;" id="generateButton">GENERATE</button>
-        </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary" style="width: 110px;min-height: 61.6px" id="resetButton">Reset</button>
+                    </div>
+                    <div class="col-md-4">
+                    <a  href="/video_generate?object_name=m81">
+                        <button class="btn btn-primary" style="width: 110px;" id="generateButton">Generate Grid</button>
+                    </a>
+                    </div>
+                    <div class="col-md-4">
+                    <a  href="/video_combined?object_name=m81">
+                        <button class="btn btn-primary" style="width: 110px;" id="generateButton1">Generate Combined</button>
+                    </a>
+                        </div>
     </div>
 </div>
 
-      <div id="videoContainer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); z-index: 9999;">
-        <video id="videoElement" controls style="width: 30%; margin: 10% auto; display: block;">
-            <source src="{{ url_for('static', filename='final_output.mp4') }}" type="video/mp4">
-            Twoja przeglądarka nie obsługuje odtwarzacza wideo.
-        </video>
-        <button id="closeButton" style="position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; background-color: #fff; border: none; border-radius: 50%; color: #000; font-size: 24px; cursor: pointer; display: flex; justify-content: center; align-items: center;">&times;</button>
+<!--      <div id="videoContainer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); z-index: 9999;">-->
+<!--        <video id="videoElement" controls style="width: 30%; margin: 10% auto; display: block;">-->
+<!--            <source src="{{ url_for('static', filename='final_output.mp4') }}" type="video/mp4">-->
+<!--            Twoja przeglądarka nie obsługuje odtwarzacza wideo.-->
+<!--        </video>-->
+<!--        <button id="closeButton" style="position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; background-color: #fff; border: none; border-radius: 50%; color: #000; font-size: 24px; cursor: pointer; display: flex; justify-content: center; align-items: center;">&times;</button>-->
 
-    </div>
+<!--    </div>-->
 
   </div>
 </div>
