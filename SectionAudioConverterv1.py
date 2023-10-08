@@ -15,25 +15,24 @@ def fun(x, a):
 
 
 class SectionAudioConverter:
-    def __init__(self, x_pos=0, y_pos=100, z_pos=4, scale_down_factor=4, imageName="m108"):
+    def __init__(self, x, y, z, scale_down_factor, imageName):
         self.imageName = imageName
         self.sps = 44100
         self.freq_hz = 100.0
         self.duration = 0.1
         self.vol = 1
-        self.x_pos = x_pos
-        self.y_pos = y_pos
-        self.z_pos = z_pos
-
-        self.x_pos, self.y_pos = self.y_pos, self.x_pos #bugfix
-
+        self.x_pos = x
+        self.y_pos = y
+        self.z_pos = z
         self.scale_down_factor = scale_down_factor
+
         self.IS = ImageSelectionSelector(self.imageName, 4, self.x_pos, self.y_pos, self.scale_down_factor)
+
         self.esm = np.arange(self.duration * self.sps)
 
         self.trackSynth = AudioSegment.empty()
 
-        self.chanelCount = z_pos + 1
+        self.chanelCount = self.z_pos + 1
         self.VM = VideoMaker(1 / self.duration)
 
     def SynthConvert(self):
@@ -70,11 +69,13 @@ class SectionAudioConverter:
 
         finalTrack.export(soundFilePath, format="wav")
 
+'''
         audio_data, sample_rate = sf.read(soundFilePath)
         reduced_noise = nr.reduce_noise(y=audio_data, sr=sample_rate)
         sf.write(soundFilePath, reduced_noise, sample_rate)
+        '''
 
-SAC = SectionAudioConverter(x_pos=0, y_pos=100, scale_down_factor=4)
+SAC = SectionAudioConverter(0, 0, 0, 4, "m104")
 SAC.SynthConvert()
 
 VM = VideoMaker(fps=10)
