@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/symphony-of-ether.iml" filepath="$PROJECT_DIR$/.idea/symphony-of-ether.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/NasaSpaceApps.iml" filepath="$PROJECT_DIR$/.idea/NasaSpaceApps.iml" />
     </modules>
   </component>
 </project>
