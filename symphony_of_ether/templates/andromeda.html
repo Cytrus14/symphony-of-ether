@@ -41,9 +41,22 @@
             Twoja przeglądarka nie obsługuje odtwarzacza wideo.
         </video>
         <button id="closeButton" style="position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; background-color: #fff; border: none; border-radius: 50%; color: #000; font-size: 24px; cursor: pointer; display: flex; justify-content: center; align-items: center;">&times;</button>
-
     </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("generateButton").addEventListener("click", function () {
+        // Pobierz wartość 'M31' z przycisku GENERATE
+        var imageName = "M1";
+
+        // Wyślij wartość imageName do serwera za pomocą XMLHttpRequest
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("imageName=" + imageName);
+    });
+});
+</script>
 
 {% endblock %}
