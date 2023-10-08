@@ -16,12 +16,16 @@
 
     /* Styl domyślnego kursora */
     #pixelImage {
-        cursor: default; /* Domyślny kursor */
+        cursor: crosshair; /* Zmieniony kursor na crosshair (zaznaczenie) */
     }
 
-    /* Styl kursora po najechaniu na zdjęcie */
-    #pixelImage:hover {
-        cursor: crosshair; /* Zmieniony kursor po najechaniu */
+    /* Styl punktu na zdjęciu */
+    #point {
+        width: 10px;
+        height: 10px;
+        background-color: #ff0090;
+        position: absolute;
+        border-radius: 60%; /* Zaokrąglenie punktu */
     }
 </style>
 {% block content %}
@@ -31,6 +35,8 @@
             <div class="card" style="text-align: center">
                 <div data-mdb-ripple-color="light">
                     <img src="../static/astronomical_objects/m31/visualization.png" class="img-fluid d-block mx-auto img-fluid" id="pixelImage">
+                    <!-- Dodaj punkt na zdjęciu -->
+                    <div id="point"></div>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">Selected Pixel Coordinates:</h5>
@@ -52,6 +58,7 @@
     const yCoordSpan = document.getElementById('yCoord');
     const imageWidthSpan = document.getElementById('imageWidth');
     const imageHeightSpan = document.getElementById('imageHeight');
+    const point = document.getElementById('point');
 
     // Pobieranie wymiarów obrazu
     const image = new Image();
@@ -65,11 +72,17 @@
         //imageWidthSpan.textContent = width/2;
         //imageHeightSpan.textContent = height/2;
 
-        // Ustaw wartość domyślną dla x
+        // Ustaw wartość domyślną dla x i y oraz pozycję punktu
         xCoordSpan.textContent = width/2;
         yCoordSpan.textContent = height/2;
+        updatePointPosition(width/2, height/2);
     };
 
+    function updatePointPosition(x, y) {
+        // Ustaw pozycję punktu na zdjęciu
+        point.style.left = x + 'px';
+        point.style.top = y + 'px';
+    }
 
     pixelImage.addEventListener('click', function(event) {
         const rect = pixelImage.getBoundingClientRect();
@@ -77,6 +90,7 @@
         const y = Math.floor(event.clientY - rect.top);
         xCoordSpan.textContent = x;
         yCoordSpan.textContent = y;
+        updatePointPosition(x, y);
         fetch('/send-coordinates', {
             method: 'POST',
             headers: {
@@ -96,11 +110,13 @@
             console.error('Błąd przesyłania danych:', error);
         });
     });
-        resetButton.addEventListener('click', function() {
+
+    resetButton.addEventListener('click', function() {
         const width = image.naturalWidth;
-        const height = image.naturalHeight
+        const height = image.naturalHeight;
         xCoordSpan.textContent = width/2;
         yCoordSpan.textContent = height/2;
+        updatePointPosition(width/2, height/2);
     });
 </script>
 </body>
