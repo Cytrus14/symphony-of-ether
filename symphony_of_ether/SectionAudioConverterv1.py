@@ -3,8 +3,8 @@ import soundfile as sf
 import numpy as np
 from pydub import AudioSegment
 
-from ImageSectionSelector import ImageSelectionSelector
-from VideoMaker import VideoMaker
+from symphony_of_ether.ImageSectionSelector import ImageSelectionSelector
+from symphony_of_ether.VideoMaker import VideoMaker
 
 soundFilePath = "Sounds/ImageMusic.wav"
 
@@ -15,7 +15,11 @@ def fun(x, a):
 
 
 class SectionAudioConverter:
+<<<<<<< HEAD:SectionAudioConverterv1.py
     def __init__(self, x, y, z, scale_down_factor, imageName):
+=======
+    def __init__(self, x_pos=50, y_pos=50, z_pos=1, scale_down_factor=4, imageName="m108"):
+>>>>>>> 8cdc31d (with crossfire error):symphony_of_ether/SectionAudioConverterv1.py
         self.imageName = imageName
         self.sps = 44100
         self.freq_hz = 100.0
@@ -25,9 +29,14 @@ class SectionAudioConverter:
         self.y_pos = y
         self.z_pos = z
         self.scale_down_factor = scale_down_factor
+<<<<<<< HEAD:SectionAudioConverterv1.py
 
         self.IS = ImageSelectionSelector(self.imageName, 4, self.x_pos, self.y_pos, self.scale_down_factor)
 
+=======
+        self.IS = ImageSelectionSelector(self.imageName, 4, start_x=self.x_pos, start_y=self.y_pos,
+                                         scale_down_factor=self.scale_down_factor)
+>>>>>>> 8cdc31d (with crossfire error):symphony_of_ether/SectionAudioConverterv1.py
         self.esm = np.arange(self.duration * self.sps)
 
         self.trackSynth = AudioSegment.empty()
@@ -39,7 +48,7 @@ class SectionAudioConverter:
         ListOfSect = self.IS.get_sections()
         ListOfTracks = [AudioSegment.empty()] * self.chanelCount
 
-        print("Loading sound...")
+        #print("Loading sound...")
         while len(ListOfSect) != 0:
             for chanel in range(1, self.chanelCount):
                 dominantIntensity = 0

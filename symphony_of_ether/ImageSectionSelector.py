@@ -15,21 +15,21 @@ class ImageSelectionSelector:
         self.frameId = 0
         self.scale_down_factor = scale_down_factor
         self.band_images = []
-        self.visualization_image = cv.imread(os.path.join('symphony_of_ether', 'static', 
+        self.visualization_image = cv.imread(os.path.join('static',
                 'astronomical_objects', object_name, 'visualization.png'))
 
         for i in range(1, channel_count+1):
             band_image_name = ('band' + str(i) + '.png')
-            band_image_path = os.path.join('symphony_of_ether', 'static', 
+            band_image_path = os.path.join('static',
                 'astronomical_objects', object_name, band_image_name)
             band_image = cv.imread(band_image_path)
             band_image = cv.cvtColor(band_image, cv.COLOR_BGR2GRAY)
             self.band_images.append(band_image)
         
         # Clear previous images if any
-        temp_images_directory_combined = os.path.join('symphony_of_ether', 'temp_files', 
+        temp_images_directory_combined = os.path.join('temp_files',
              'temp_images', 'combined')
-        temp_images_directory_grid = os.path.join('symphony_of_ether', 'temp_files', 
+        temp_images_directory_grid = os.path.join('temp_files',
              'temp_images', 'grid')
         files = os.listdir(temp_images_directory_combined)
         for file in files:
@@ -138,9 +138,9 @@ class ImageSelectionSelector:
         # img = cv.resize(img_resized, (img_size_y, img_size_x), interpolation=cv.INTER_NEAREST)
         # cv.imwrite(os.path.join('symphony_of_ether', 'temp_files', 
         #     'temp_images', 'combined', str(self.frameId) + '.png'), visualization_image_copy)
-        cv.imwrite(os.path.join('symphony_of_ether', 'temp_files', 
+        cv.imwrite(os.path.join('temp_files',
         'temp_images', 'combined', str(self.frameId) + '.png'), visualization_image_copy)
-        cv.imwrite(os.path.join('symphony_of_ether', 'temp_files', 
+        cv.imwrite(os.path.join('temp_files',
         'temp_images', 'grid', str(self.frameId) + '.png'), grid_image)
         self.circle_radius += 1
         self.frameId += 1

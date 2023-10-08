@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="overlay" style="display: none;">
+    <div id="videoContainer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); z-index: 9999;">
+        <video id="videoElement" controls style="width: 30%; margin: 10% auto; display: block;">
+             <source src="{{ url_for('static', filename='temp_video/output_combined.mp4') }}" type="video/mp4">
+            Twoja przeglądarka nie obsługuje odtwarzacza wideo.
+        </video>
+        <a href="/" id="closeButton" style="position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; background-color: #fff; border: none; border-radius: 50%; color: #000; font-size: 24px; cursor: pointer; display: flex; justify-content: center; align-items: center;">&times;</a>
+    </div>
+    </div>
+</body>
+</html>
