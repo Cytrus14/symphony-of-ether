@@ -1,5 +1,6 @@
 import math
-
+import noisereduce as nr
+import soundfile as sf
 import numpy as np
 from pydub import AudioSegment
 
@@ -11,14 +12,14 @@ soundFilePath = "Sounds/ImageMusic.wav"
 
 def fun(x, a):
     wave = a * np.sinc(x)
-    return 20 - 1 / wave
+    return 20 - 1/wave
 
 
 class SectionAudioConverter:
-    def __init__(self, x_pos=0, y_pos=0, z_pos=1, scale_down_factor=4,immageName="m1"):
-        self.imageName = "m104"
+    def __init__(self, x_pos=0, y_pos=0, z_pos=1, scale_down_factor=4, imageName="m108"):
+        self.imageName = imageName
         self.sps = 44100
-        self.freq_hz = 220.0
+        self.freq_hz = 100.0
         self.duration = 0.1
         self.vol = 1
         self.x_pos = x_pos
@@ -46,7 +47,7 @@ class SectionAudioConverter:
                     dominantIntensity += math.pow(1.2, section.intensity)
                 dominantIntensity /= len(ListOfSect)
 
-                currentFreq = (self.freq_hz + chanel * dominantIntensity)/chanel
+                currentFreq = (self.freq_hz + chanel * dominantIntensity)/(chanel*2)
                 currentVol = self.vol
                 waveFunction = fun((2 * np.pi * self.esm * currentFreq / self.sps), dominantIntensity)
                 waveFunctionQuiet = waveFunction * currentVol
@@ -68,7 +69,11 @@ class SectionAudioConverter:
 
         finalTrack.export(soundFilePath, format="wav")
 
+        audio_data, sample_rate = sf.read(soundFilePath)
+        reduced_noise = nr.reduce_noise(y=audio_data, sr=sample_rate)
+        sf.write(soundFilePath, reduced_noise, sample_rate)
 
+'''
 SAC = SectionAudioConverter(4, scale_down_factor=4)
 SAC.SynthConvert()
 
@@ -76,3 +81,4 @@ VM = VideoMaker(fps=10)
 VM.audio_path = "Sounds/ImageMusic.wav"
 VM.gen_video("combined")
 VM.gen_video("grid")
+'''
