@@ -15,7 +15,7 @@ def videomaker():
     #Tworzenie obiektu SectionAudioConverter z imageName
     #     # (Skorzystaj z poprawnej nazwy klucza 'x' i 'y' w słowniku coordinates)
     object_name = request.args.get('object_name')
-    obj1 = SectionAudioConverter(x_pos=int(coordinates['x']/4), y_pos=int(coordinates['y']/4),
+    obj1 = SectionAudioConverter(x=int(coordinates['x']/4), y=int(coordinates['y']/4),z=4,
                                  scale_down_factor=4, imageName=object_name)
     obj1.SynthConvert()
     #
@@ -34,7 +34,7 @@ def videomaker_combined():
     #Tworzenie obiektu SectionAudioConverter z imageName
     #     # (Skorzystaj z poprawnej nazwy klucza 'x' i 'y' w słowniku coordinates)
     object_name = request.args.get('object_name')
-    obj1 = SectionAudioConverter(x_pos=int(coordinates['x']/4), y_pos=int(coordinates['y']/4),
+    obj1 = SectionAudioConverter(x=int(coordinates['x']/4), y=int(coordinates['y']/4),z=4,
                                  scale_down_factor=4, imageName=object_name)
     obj1.SynthConvert()
     #
@@ -115,8 +115,8 @@ def get_video():
 def receive_coordinates():
     try:
         data = request.get_json()
-        x = data['x']
-        y = data['y']
+        x = data['y']
+        y = data['x']
 
         # Zapisz współrzędne w słowniku
         global  coordinates
