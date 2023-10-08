@@ -72,12 +72,3 @@ class SectionAudioConverter:
         audio_data, sample_rate = sf.read(soundFilePath)
         reduced_noise = nr.reduce_noise(y=audio_data, sr=sample_rate)
         sf.write(soundFilePath, reduced_noise, sample_rate)
-
-#
-SAC = SectionAudioConverter(100, 100, 4, scale_down_factor=4, imageName="m81")
-SAC.SynthConvert()
-
-VM = VideoMaker(fps=10)
-VM.audio_path = "Sounds/ImageMusic.wav"
-VM.gen_video("combined")
-VM.gen_video("grid")
