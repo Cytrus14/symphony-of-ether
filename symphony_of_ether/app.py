@@ -1,8 +1,31 @@
+
 from flask import Flask, render_template, request, jsonify, send_from_directory, Response
+from ..SectionAudioConverterv1 import SectionAudioConverter
+from VideoMaker import VideoMaker
 
 app = Flask(__name__, template_folder='templates')
 
 coordinates = {'x': None, 'y': None}
+
+
+@app.route('/', methods=['GET', 'POST'])
+def videomaker():
+    if request.method == 'POST':
+        # Pobierz wartość imageName z formularza
+        imageName = request.form.get('imageName')
+
+        # Tworzenie obiektu SectionAudioConverter z imageName
+        obj1 = SectionAudioConverter(x_pos=coordinates.x, y_pos=coordinates.y, scale_down_factor=4, imageName=imageName)
+        obj1.SynthConvert()
+
+        # Reszta kodu
+        obj2 = VideoMaker(fps=10)
+        obj2.audio_path = "Sounds/ImageMusic.wav"
+        obj2.gen_video("combined")
+        obj2.gen_video("grid")
+
+    return render_template('your_template.html')
+
 
 @app.route('/')
 def index():

@@ -15,7 +15,7 @@ def fun(x, a):
 
 
 class SectionAudioConverter:
-    def __init__(self, x_pos=0, y_pos=0, z_pos=1, scale_down_factor=4):
+    def __init__(self, x_pos=0, y_pos=0, z_pos=1, scale_down_factor=4,immageName="m1"):
         self.imageName = "m104"
         self.sps = 44100
         self.freq_hz = 220.0
