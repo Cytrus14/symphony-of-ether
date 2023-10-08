@@ -8,8 +8,9 @@
 
 <a href="/" class="round-button">&larr;</a>
   <div class="card" style="min-height: 600px; ">
-      <div class="container" style="padding: 2rem">
+      <div class="container" style="padding: 0">
     <img src="../static/astronomical_objects/m27/visualization.png" alt="Dumbbell_Nebula" id="pixelImage" style="border-radius: 2%;">
+          <div id="point"></div>
 </div>
       <div class="card-body">
                     <h5 class="card-title">Selected Pixel Coordinates:</h5>
@@ -21,16 +22,25 @@
                     </p>
                 </div>
 
-  <div class="container" style="display: flex; justify-content: space-evenly;">
-    <div class="row" style="margin-top: 2rem;">
+  <div class="container" style="display: flex; justify-content: space-evenly; margin-bottom: 20px">
+    <div class="row" style="margin-top: 0;">
         <div class="col-md-6">
             <button class="btn btn-primary" style="width: 100px;" id="resetButton">RESET</button>
         </div>
         <div class="col-md-6">
-            <button class="btn btn-primary" style="width: 100px;">GENERATE</button>
+            <button class="btn btn-primary" style="width: 100px;" id="generateButton">GENERATE</button>
         </div>
     </div>
 </div>
+
+      <div id="videoContainer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); z-index: 9999;">
+        <video id="videoElement" controls style="width: 30%; margin: 10% auto; display: block;">
+            <source src="{{ url_for('static', filename='final_output.mp4') }}" type="video/mp4">
+            Twoja przeglądarka nie obsługuje odtwarzacza wideo.
+        </video>
+        <button id="closeButton" style="position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; background-color: #fff; border: none; border-radius: 50%; color: #000; font-size: 24px; cursor: pointer; display: flex; justify-content: center; align-items: center;">&times;</button>
+
+    </div>
 
 
   </div>

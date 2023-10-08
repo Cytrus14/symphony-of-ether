@@ -30,6 +30,13 @@
             background-color: #0056b3;
             transform: scale(1.1);
         }
+        #point {
+        width: 10px;
+        height: 10px;
+        background-color: #ff0090;
+        position: absolute;
+        border-radius: 60%; /* Zaokrąglenie punktu */
+        }
     </style>
 
 
@@ -40,20 +47,48 @@
 
 
 </head>
-<body style="background-color: #D8D8D8; display: flex; justify-content: center">
+<body style="background-color: #D8D8D8; display: flex; justify-content: center; height: 800px">
 
     <main class="mt-5">
         <div class="row" style="max-width: 1400px">
             {% block content %}{% endblock %}
         </div>
     </main>
-    <script>
 
+    <script>
+    const generateButton = document.getElementById('generateButton');
+    const videoContainer = document.getElementById('videoContainer');
+    const closeButton = document.getElementById('closeButton');
+    const overlay = document.getElementById('overlay');
+
+    generateButton.addEventListener('click', function() {
+        // Wyświetlenie wideo po kliknięciu przycisku
+        videoContainer.style.display = 'block';
+        overlay.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', function() {
+        // Ukrycie wideo i overlay po kliknięciu przycisku zamykania
+        videoContainer.style.display = 'none';
+        overlay.style.display = 'none';
+    });
+    </script>
+    <script>
+    const generateButton = document.getElementById('generateButton');
+    const videoElement = document.getElementById('videoElement');
+
+    generateButton.addEventListener('click', function() {
+        // Wyświetlenie wideo po kliknięciu przycisku
+        videoElement.style.display = 'block';
+    });
+    </script>
+    <script>
     const pixelImage = document.getElementById('pixelImage');
     const xCoordSpan = document.getElementById('xCoord');
     const yCoordSpan = document.getElementById('yCoord');
     const imageWidthSpan = document.getElementById('imageWidth');
     const imageHeightSpan = document.getElementById('imageHeight');
+    const point = document.getElementById('point');
 
     // Pobieranie wymiarów obrazu
     const image = new Image();
@@ -67,11 +102,17 @@
         //imageWidthSpan.textContent = width/2;
         //imageHeightSpan.textContent = height/2;
 
-        // Ustaw wartość domyślną dla x
+        // Ustaw wartość domyślną dla x i y oraz pozycję punktu
         xCoordSpan.textContent = width/2;
         yCoordSpan.textContent = height/2;
+        updatePointPosition(width/2, height/2);
     };
 
+    function updatePointPosition(x, y) {
+        // Ustaw pozycję punktu na zdjęciu
+        point.style.left = x -4 + 'px';
+        point.style.top = y - 3+'px';
+    }
 
     pixelImage.addEventListener('click', function(event) {
         const rect = pixelImage.getBoundingClientRect();
@@ -79,6 +120,7 @@
         const y = Math.floor(event.clientY - rect.top);
         xCoordSpan.textContent = x;
         yCoordSpan.textContent = y;
+        updatePointPosition(x, y);
         fetch('/send-coordinates', {
             method: 'POST',
             headers: {
@@ -98,13 +140,14 @@
             console.error('Błąd przesyłania danych:', error);
         });
     });
-        resetButton.addEventListener('click', function() {
+
+    resetButton.addEventListener('click', function() {
         const width = image.naturalWidth;
-        const height = image.naturalHeight
+        const height = image.naturalHeight;
         xCoordSpan.textContent = width/2;
         yCoordSpan.textContent = height/2;
+        updatePointPosition(width/2, height/2);
     });
-
 </script>
 <script>
     const pixelImage = document.getElementById('pixelImage');

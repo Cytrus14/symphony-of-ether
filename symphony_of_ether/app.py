@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 
 app = Flask(__name__, template_folder='templates')
 
@@ -58,6 +58,14 @@ def NGC_5272():
 @app.route('/Dumbbell_Nebula')
 def Dumbbell_Nebula():
     return render_template('Dumbbell_Nebula.html')
+
+def get_video():
+    video_path = 'static/final_output.mp4'  # Ścieżka do pliku wideo
+    return Response(open(video_path, 'rb'), mimetype='video/mp4')
+
+@app.route('/video/final_output.mp4')
+def get_video(filename):
+    return send_from_directory('static', "static/final_output.mp4")
 
 @app.route('/send-coordinates', methods=['POST'])
 def receive_coordinates():
