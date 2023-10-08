@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from ImageSection import ImageSection
 
 class ImageSelectionSelector:
-    def __init__(self, object_name, channel_count, start_x, start_y):
+    def __init__(self, object_name, channel_count, start_x, start_y, scale_down_factor=4):
         self.circle_radius = 0
         self.circle_thickness = 0.5
         self.circle_center_x = start_x
@@ -14,6 +14,7 @@ class ImageSelectionSelector:
         self.channel_count = channel_count
         self.frameId = 0
         self.scale_down_factor = 4
+        self.scale_down_factor = scale_down_factor
         self.band_images = []
         self.visualization_image = cv.imread(os.path.join('symphony_of_ether', 'static', 
                 'astronomical_objects', object_name, 'visualization.png'))
@@ -27,11 +28,23 @@ class ImageSelectionSelector:
             self.band_images.append(band_image)
         
         # Clear previous images if any
-        temp_images_directory = os.path.join('symphony_of_ether', 'temp_files', 
-             'temp_images')
-        files = os.listdir(temp_images_directory)
+        temp_images_directory_combined = os.path.join('symphony_of_ether', 'temp_files', 
+             'temp_images', 'combined')
+        temp_images_directory_grid = os.path.join('symphony_of_ether', 'temp_files', 
+             'temp_images', 'grid')
+        files = os.listdir(temp_images_directory_combined)
         for file in files:
-            file_path = os.path.join(temp_images_directory, file)
+            file_path = os.path.join(temp_images_directory_combined, file)
+            try:
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            except Exception as e:
+                print(f'Error deleting {file_path}', {e})
+                files = os.listdir(temp_images_directory_combined)
+
+        files = os.listdir(temp_images_directory_grid) 
+        for file in files:
+            file_path = os.path.join(temp_images_directory_grid, file)
             try:
                 if os.path.isfile(file_path):
                     os.remove(file_path)
@@ -121,20 +134,22 @@ class ImageSelectionSelector:
                         grid_image[img_size_y+20:,:img_size_x+20] = self._add_padding_and_text(img_copy, "12.0 micro meters")
                     elif idx == 3:
                         grid_image[img_size_y+20:,img_size_x+20:] = self._add_padding_and_text(img_copy, "22.0 micro meters")
-            cv.imwrite(os.path.join('symphony_of_ether', 'temp_files', 
-                'temp_images', 'grid', str(self.frameId) + '.png'), grid_image)
 
-
-            img = cv.resize(img_resized, (img_size_y, img_size_x), interpolation=cv.INTER_NEAREST)
-            cv.imwrite(os.path.join('symphony_of_ether', 'temp_files', 
-             'temp_images', 'combined', str(self.frameId) + '.png'), visualization_image_copy)
+            
+        # img = cv.resize(img_resized, (img_size_y, img_size_x), interpolation=cv.INTER_NEAREST)
+        # cv.imwrite(os.path.join('symphony_of_ether', 'temp_files', 
+        #     'temp_images', 'combined', str(self.frameId) + '.png'), visualization_image_copy)
+        cv.imwrite(os.path.join('symphony_of_ether', 'temp_files', 
+        'temp_images', 'combined', str(self.frameId) + '.png'), visualization_image_copy)
+        cv.imwrite(os.path.join('symphony_of_ether', 'temp_files', 
+        'temp_images', 'grid', str(self.frameId) + '.png'), grid_image)
         self.circle_radius += 1
         self.frameId += 1
         return imageSectionsList
 
-temp = ImageSelectionSelector('m108', 4, 10, 10)
-sections = temp.get_sections()
-while len(sections) != 0:
-    sections = temp.get_sections()
+# temp = ImageSelectionSelector('m108', 4, 10, 10)
+# sections = temp.get_sections()
+# while len(sections) != 0:
+#     sections = temp.get_sections()
 
 

@@ -9,7 +9,8 @@ soundFilePath = "Sounds/ImageMusic.wav"
 
 
 class SectionAudioConverter:
-    def __init__(self, chanelCount=1):
+    def __init__(self, chanelCount = 1, scale_down_factor=4):
+        self.scale_down_factor = scale_down_factor
         self.volume = 64
         self.trackTempo = 1000
         self.trackInstrumental = mido.MidiTrack()
@@ -18,7 +19,7 @@ class SectionAudioConverter:
         self.mid.tracks.append(self.trackInstrumental)
         self.trackInstrumental.append(mido.MetaMessage('set_tempo', tempo=self.trackTempo))
 
-        self.IS = ImageSelectionSelector("m31", 4, 0, 0)
+        self.IS = ImageSelectionSelector("m108", 4, 0, 0, self.scale_down_factor)
         self.sps = 44100
         self.freq_hz = 220.0
         self.duration = 0.1
@@ -93,8 +94,7 @@ class SectionAudioConverter:
 
         finalTrack.export(soundFilePath, format="wav")
 
-
-SAC = SectionAudioConverter(4)
+SAC = SectionAudioConverter(4, scale_down_factor=4)
 SAC.SynthConvert()
 
 VM = VideoMaker(fps=10)
