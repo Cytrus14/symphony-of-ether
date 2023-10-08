@@ -1,4 +1,3 @@
-import math
 import noisereduce as nr
 import soundfile as sf
 import numpy as np
@@ -16,7 +15,7 @@ def fun(x, a):
 
 
 class SectionAudioConverter:
-    def __init__(self, x_pos=0, y_pos=0, z_pos=1, scale_down_factor=4, imageName="m108"):
+    def __init__(self, x_pos=0, y_pos=100, z_pos=4, scale_down_factor=4, imageName="m108"):
         self.imageName = imageName
         self.sps = 44100
         self.freq_hz = 100.0
@@ -26,8 +25,10 @@ class SectionAudioConverter:
         self.y_pos = y_pos
         self.z_pos = z_pos
 
+        self.x_pos, self.y_pos = self.y_pos, self.x_pos #bugfix
+
         self.scale_down_factor = scale_down_factor
-        self.IS = ImageSelectionSelector(self.imageName, 4, 0, 0, self.scale_down_factor)
+        self.IS = ImageSelectionSelector(self.imageName, 4, self.x_pos, self.y_pos, self.scale_down_factor)
         self.esm = np.arange(self.duration * self.sps)
 
         self.trackSynth = AudioSegment.empty()
@@ -44,7 +45,7 @@ class SectionAudioConverter:
             for chanel in range(1, self.chanelCount):
                 dominantIntensity = 0
                 for section in ListOfSect:
-                    dominantIntensity += math.pow(1.2, section.intensity)
+                    dominantIntensity += np.power(1.2, section.intensity)
                 dominantIntensity /= len(ListOfSect)
 
                 currentFreq = (self.freq_hz + chanel * dominantIntensity)/(chanel*2)
@@ -73,12 +74,10 @@ class SectionAudioConverter:
         reduced_noise = nr.reduce_noise(y=audio_data, sr=sample_rate)
         sf.write(soundFilePath, reduced_noise, sample_rate)
 
-'''
-SAC = SectionAudioConverter(4, scale_down_factor=4)
+SAC = SectionAudioConverter(x_pos=0, y_pos=100, scale_down_factor=4)
 SAC.SynthConvert()
 
 VM = VideoMaker(fps=10)
 VM.audio_path = "Sounds/ImageMusic.wav"
 VM.gen_video("combined")
 VM.gen_video("grid")
-'''
