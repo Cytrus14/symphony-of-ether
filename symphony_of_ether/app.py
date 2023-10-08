@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask import Flask, render_template, request, jsonify, send_from_directory, Response
 
 app = Flask(__name__, template_folder='templates')
 
@@ -66,6 +66,7 @@ def get_video():
 @app.route('/video/final_output.mp4')
 def get_video(filename):
     return send_from_directory('static', "static/final_output.mp4")
+
 
 @app.route('/send-coordinates', methods=['POST'])
 def receive_coordinates():
