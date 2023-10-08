@@ -4,8 +4,8 @@ import soundfile as sf
 import numpy as np
 from pydub import AudioSegment
 
-from ImageSectionSelector import ImageSelectionSelector
-from VideoMaker import VideoMaker
+from symphony_of_ether.ImageSectionSelector import ImageSelectionSelector
+from symphony_of_ether.VideoMaker import VideoMaker
 
 soundFilePath = "Sounds/ImageMusic.wav"
 
@@ -16,7 +16,7 @@ def fun(x, a):
 
 
 class SectionAudioConverter:
-    def __init__(self, x_pos=0, y_pos=0, z_pos=1, scale_down_factor=4, imageName="m108"):
+    def __init__(self, x_pos=50, y_pos=50, z_pos=1, scale_down_factor=4, imageName="m108"):
         self.imageName = imageName
         self.sps = 44100
         self.freq_hz = 100.0
@@ -27,7 +27,8 @@ class SectionAudioConverter:
         self.z_pos = z_pos
 
         self.scale_down_factor = scale_down_factor
-        self.IS = ImageSelectionSelector(self.imageName, 4, 0, 0, self.scale_down_factor)
+        self.IS = ImageSelectionSelector(self.imageName, 4, start_x=self.x_pos, start_y=self.y_pos,
+                                         scale_down_factor=self.scale_down_factor)
         self.esm = np.arange(self.duration * self.sps)
 
         self.trackSynth = AudioSegment.empty()
@@ -39,7 +40,7 @@ class SectionAudioConverter:
         ListOfSect = self.IS.get_sections()
         ListOfTracks = [AudioSegment.empty()] * self.chanelCount
 
-        print("Loading sound...")
+        #print("Loading sound...")
         while len(ListOfSect) != 0:
             for chanel in range(1, self.chanelCount):
                 dominantIntensity = 0
