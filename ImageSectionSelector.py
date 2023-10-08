@@ -6,14 +6,13 @@ import matplotlib.pyplot as plt
 from ImageSection import ImageSection
 
 class ImageSelectionSelector:
-    def __init__(self, object_name, channel_count, start_x, start_y, scale_down_factor=4):
+    def __init__(self, object_name, channel_count, start_x, start_y, scale_down_factor=1):
         self.circle_radius = 0
         self.circle_thickness = 0.5
         self.circle_center_x = start_x
         self.circle_center_y = start_y
         self.channel_count = channel_count
         self.frameId = 0
-        self.scale_down_factor = 4
         self.scale_down_factor = scale_down_factor
         self.band_images = []
         self.visualization_image = cv.imread(os.path.join('symphony_of_ether', 'static', 
