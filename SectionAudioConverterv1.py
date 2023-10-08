@@ -73,6 +73,7 @@ class SectionAudioConverter:
         reduced_noise = nr.reduce_noise(y=audio_data, sr=sample_rate)
         sf.write(soundFilePath, reduced_noise, sample_rate)
 
+#
 SAC = SectionAudioConverter(100, 100, 4, scale_down_factor=4, imageName="m81")
 SAC.SynthConvert()
 
